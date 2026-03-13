@@ -1,5 +1,6 @@
 package com.task;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class TanTest {
 
     @Test
+    @DisplayName("проверка функции")
     void testTgx_1() {
         double x = 0.5;
         int terms = 1;
@@ -15,6 +17,7 @@ class TanTest {
     }
 
     @Test
+    @DisplayName("проверка функции, когда t = 2")
     void testTgx_2() {
         double x = 0.5;
         int terms = 2;
@@ -24,6 +27,7 @@ class TanTest {
     }
 
     @Test
+    @DisplayName("проверка функции, когда t = 3")
     void testTgx_3() {
         double x = 0.5;
         int terms = 3;
@@ -34,6 +38,7 @@ class TanTest {
     }
 
     @Test
+    @DisplayName("проверка функции, когда x = 0")
     void testTgx_4() {
         double x = 0.0;
         assertEquals(0.0, Tan.calculateTan(x, 1));
@@ -42,6 +47,7 @@ class TanTest {
     }
 
     @Test
+    @DisplayName("проверка вывода ошибка функции")
     void testTgx_error1() {
         double x = 0.5;
         int invalidTerms = 0;
@@ -53,6 +59,7 @@ class TanTest {
     }
 
     @Test
+    @DisplayName("проверка вывода ошибка функции")
     void testTgx_error2() {
         double x = 4;
         int invalidTerms = 2;

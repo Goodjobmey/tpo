@@ -3,7 +3,7 @@ package com.task;
 public class SortList {
     public static void mergeSort(int[] array) {
         if (array == null || array.length == 0) {
-            throw new IllegalArgumentException("Ошибка: длина списка должна быть больше 0");
+            throw new IllegalArgumentException("Ошибка: длина списка должнен быть больше 0");
         }
         if (array.length == 1) {
             return;
