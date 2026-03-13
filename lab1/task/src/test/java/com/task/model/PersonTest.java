@@ -31,4 +31,26 @@ public class PersonTest {
         assertEquals("calm", person.getCondition().getName());
         System.out.println("passed");
     }
+
+    @Test
+    void textTest() {
+
+        System.out.println("TEST 2 . . .");
+        Condition condition = new Condition("нервничая");
+
+        Kingdom kingdom = new Kingdom("Lilipytia");
+
+        Action action = new Action("вошел");
+
+        Person person = new Person(
+                "Артур",
+                condition,
+                action
+        );
+
+        assertEquals("Артур нервничая вошел", person.getName() + " " + person.getCondition().getName() + " " + action.getName());
+        System.out.println("passed");
+    }
+
+
 }

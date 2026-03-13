@@ -1,6 +1,8 @@
 package com.model;
 
-public class Observation implements Changeble{
+import com.model.interfaces.Changeble;
+
+public class Observation implements Changeble {
 
     private Person observer;
     private Object observedObject;

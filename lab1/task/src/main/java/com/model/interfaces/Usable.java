@@ -1,4 +1,6 @@
-package com.model;
+package com.model.interfaces;
+
+import com.model.Furniture;
 
 public interface Usable {
 

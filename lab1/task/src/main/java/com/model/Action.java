@@ -1,6 +1,8 @@
 package com.model;
 
-public class Action implements Changeble{
+import com.model.interfaces.Changeble;
+
+public class Action implements Changeble {
 
     private String name;
     private BodyPart bodyPart;

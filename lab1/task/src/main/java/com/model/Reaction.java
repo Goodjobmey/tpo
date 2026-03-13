@@ -1,6 +1,8 @@
 package com.model;
 
-public class Reaction implements Changeble{
+import com.model.interfaces.Changeble;
+
+public class Reaction implements Changeble {
 
     private String name;
 
