@@ -10,6 +10,7 @@ public class Person {
     private List<BodyPart> bodyParts;
     private Action action;
     private Kingdom kingdom;
+    private Integer power;
 
     // полный конструктор
     public Person(String name, Condition condition, Action action,
@@ -36,6 +37,14 @@ public class Person {
         this.emotion = emotion;
     }
 
+    //сокращенный конструктор
+    public Person(String name, Condition condition, Action action, int power) {
+        this.name = name;
+        this.condition = condition;
+        this.action = action;
+        this.power = power;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,5 +67,9 @@ public class Person {
 
     public Kingdom getKingdom() {
         return kingdom;
+    }
+
+    public Integer getPower() {
+        return power;
     }
 }

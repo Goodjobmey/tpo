@@ -71,4 +71,31 @@ public class ActionTest {
         assertEquals("fear", person.getEmotion().getName());
         System.out.println("passed");
     }
+
+    // чек выламывани двери
+    @Test
+    void bodyPartActionTest4(){
+
+        System.out.println("TEST 4: Veronica open the door please. . .");
+
+        Condition c1 = new Condition("irritation");
+        Action action = new Action("open the door");
+
+        Person person1 = new Person("JD", c1, action,0);
+        Person person2 = new Person("JD", c1, action,20);
+        Person person3 = new Person("JD", c1, action,55);
+
+        Furniture door1 = new Furniture("door", 5);
+
+        action.openDoor(person1, door1);
+        assertEquals("closed", door1.getCondition().getName());
+
+        action.openDoor(person2, door1);
+        assertEquals("opened", door1.getCondition().getName());
+
+        action.openDoor(person3, door1);
+        assertEquals("broken", door1.getCondition().getName());
+
+        System.out.println("Veronica open the door passed");
+    }
 }

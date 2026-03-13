@@ -29,4 +29,5 @@ public class ObservationTest {
         assertEquals("shock", arthur.getCondition().getName());
         System.out.println("passed");
     }
+
 }
