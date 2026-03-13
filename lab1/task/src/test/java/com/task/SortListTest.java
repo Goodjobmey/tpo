@@ -52,7 +52,7 @@ public class SortListTest {
                 IllegalArgumentException.class,
                 () -> mergeSort(input)
         );
-        assertEquals("Ошибка: длина списка должен быть больше 0", exception.getMessage());
+        assertEquals("Ошибка: длина списка должна быть больше 0", exception.getMessage());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class SortListTest {
                 IllegalArgumentException.class,
                 () -> mergeSort(null)
         );
-        assertEquals("Ошибка: длина списка должен быть больше 0", exception.getMessage());
+        assertEquals("Ошибка: длина списка должна быть больше 0", exception.getMessage());
     }
 
 }
