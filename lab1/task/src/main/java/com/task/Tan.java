@@ -3,7 +3,26 @@ package com.task;
 public class Tan {
 
     public static double calculateTan(double x, int terms){
+        if (Double.isNaN(x)) {
+            return Double.NaN;
+        }
+
+        if (Double.isInfinite(x)) {
+            return Double.NaN;
+        }
+
+        if (x == 0.0) {
+            return x;
+        }
+
+        if (Math.abs(x) > 1e6) {
+            return Double.NaN;
+        }
+
         if (Math.abs(x) >= Math.PI / 2) {
+            if (Math.abs(Math.abs(x) - Math.PI / 2) < 1e-12) {
+                return Double.POSITIVE_INFINITY;
+            }
             throw new IllegalArgumentException("|x| должно меньше чем π/2");
         }
 

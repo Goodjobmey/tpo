@@ -3,8 +3,7 @@ package com.task;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TanTest {
 
@@ -44,6 +43,56 @@ class TanTest {
         assertEquals(0.0, Tan.calculateTan(x, 1));
         assertEquals(0.0, Tan.calculateTan(x, 2));
         assertEquals(0.0, Tan.calculateTan(x, 3));
+    }
+
+    @Test
+    @DisplayName("проверка функции, когда x бесконечно большая или маленькая")
+    void testTgx_5() {
+        double[] infinity = {Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY};
+        for (double x : infinity) {
+            assertEquals(Double.NaN, Tan.calculateTan(x, 5));
+        }
+    }
+
+    @Test
+    @DisplayName("проверка функции, когда x = NaN")
+    void testTgx_6() {
+        double x = Double.NaN;
+        assertEquals(Double.NaN, Tan.calculateTan(x, 5));
+    }
+
+    @Test
+    @DisplayName("проверка функции, когда x приблизительно к пи на 2 слева")
+    void testTgx_7() {
+        double x = Math.PI/2 - 1e-12;
+        double result = Tan.calculateTan(x, 10);
+        assertFalse(Double.isInfinite(result));
+    }
+
+    @Test
+    @DisplayName("проверка функции, когда x приблизительно к пи на 2 справа")
+    void testTgx_8() {
+        double x = - Math.PI/2 + 1e-12;
+        double result = Tan.calculateTan(x, 10);
+        assertFalse(Double.isInfinite(result));
+    }
+
+    @Test
+    @DisplayName("проверка функции, когда x приблизительно к 0 слева")
+    void testTgx_9() {
+        double x = 1e-12;
+        double result = Tan.calculateTan(x, 5);
+
+        assertEquals(x, result, 1e-15);
+    }
+
+    @Test
+    @DisplayName("проверка функции, когда x приблизительно к 0 справа")
+    void testTgx_10() {
+        double x = -1e-12;
+        double result = Tan.calculateTan(x, 5);
+
+        assertEquals(x, result, 1e-15);
     }
 
     @Test

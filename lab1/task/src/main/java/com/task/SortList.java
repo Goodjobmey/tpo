@@ -27,7 +27,6 @@ public class SortList {
         int k = 0;
 
         while (i <= m && j <= r) {
-
             if (arr[i] <= arr[j]) {
                 temp[k] = arr[i];
                 i++;
@@ -38,16 +37,10 @@ public class SortList {
             k++;
         }
 
-        while (i <= m) {
-            temp[k] = arr[i];
-            i++;
-            k++;
-        }
-
-        while (j <= r) {
-            temp[k] = arr[j];
-            j++;
-            k++;
+        if (i <= m) {
+            System.arraycopy(arr, i, temp, k, m - i + 1);
+        } else if (j <= r) {
+            System.arraycopy(arr, j, temp, k, r - j + 1);
         }
 
         System.arraycopy(temp, 0, arr, l, temp.length);
