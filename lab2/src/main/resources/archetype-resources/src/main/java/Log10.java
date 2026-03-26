@@ -1,5 +1,0 @@
-public class Log10 {
-    public static double calculate(double x, double eps) {
-        return Ln.calculate(x, eps) / Ln.calculate(10, eps);
-    }
-}
