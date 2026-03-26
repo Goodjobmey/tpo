@@ -17,7 +17,7 @@ public class SinFunction implements Function {
         input = input % cycle;
 
         if (input > cycle) {
-            input -= cycle;
+            input = input - cycle;
         }
 
         double result = 0;
