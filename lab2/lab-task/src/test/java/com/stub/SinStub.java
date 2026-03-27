@@ -1,6 +1,6 @@
 package com.stub;
 
-public class SinStub extends TableStub {
+public class SinStub extends TableStub{
 
     public SinStub() {
         super("sin");
