@@ -29,7 +29,7 @@ public class FunctionTest {
         for (double[] point : sinStub.getTable()) {
             double x = point[0];
             assertEquals(Math.cos(x), cosWithStub.calculate(x, eps), eps,
-                    "cos(" + x + ")  должен совпадать с Math.cos");
+                    "cos(" + x + ") должен совпадать с Math.cos");
         }
     }
 }
