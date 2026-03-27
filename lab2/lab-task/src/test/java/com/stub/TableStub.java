@@ -58,6 +58,11 @@ public class TableStub implements Function {
         return name;
     }
 
+    public List<double[]> getTable() {
+        sort();
+        return table;
+    }
+
     public int size() {
         return table.size();
     }

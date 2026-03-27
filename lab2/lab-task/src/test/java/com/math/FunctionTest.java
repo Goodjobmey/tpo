@@ -34,24 +34,12 @@ public class FunctionTest {
     @Test
     public void testCOSWithStub() {
         SinStub sinStub = new SinStub();  // заглушка
-        CosFunction cosWithStub = new CosFunction(sinFunction);
+        CosFunction cosWithStub = new CosFunction(sin);
 
-//        double[] inputs = {
-//                0,
-//                Math.PI / 6,
-//                Math.PI / 2,
-//                2 * Math.PI / 3,
-//                Math.PI,
-//                4 * Math.PI / 3,
-//                11 * Math.PI / 6,
-//                -Math.PI / 4,
-//                10 * Math.PI + Math.PI / 4,
-//                1e-10
-//        };
-
-        for (double x : sinStub) {
+        for (double[] point : sinStub.getTable()) {  // 需要添加 getter 方法
+            double x = point[0];
             assertEquals(Math.cos(x), cosWithStub.calculate(x, eps), eps,
-                    "cos(" + x + ") должен совпадать с Math.cos через stub");
+                    "cos(" + x + ") 应该与 Math.cos 通过 stub 保持一致");
         }
     }
 }
