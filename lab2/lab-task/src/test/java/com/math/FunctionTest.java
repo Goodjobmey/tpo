@@ -10,7 +10,7 @@ public class FunctionTest {
     private final SinFunction sin = new SinFunction();
     private final double eps = 1e-6;
 
-    // тест синуса через реальную функцию
+    // тест синуса через функцию
     @Test
     public void testSIN() {
         double[] inputs = {

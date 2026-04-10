@@ -23,6 +23,7 @@ public class LnFunctionTest {
         assertEquals(0, ln.calculate(1, eps), ep, "ln(1) должен быть 0");
     }
 
+
     @Test
     public void testValuesGreaterThanOne() {
         double[] inputs = {2, 3, Math.E, 10, 100};

@@ -4,13 +4,13 @@ import com.back.Function;
 
 public class CompleteFunction implements Function {
 
-    private final CosFunction cosFunction;
-    private final SinFunction sinFunction;
-    private final LnFunction lnFunction;
-    private final LogAFunction log2;
-    private final LogAFunction log3;
-    private final LogAFunction log5;
-    private final LogAFunction log10;
+    private final Function cosFunction;
+    private final Function sinFunction;
+    private final Function lnFunction;
+    private final Function log2;
+    private final Function log3;
+    private final Function log5;
+    private final Function log10;
 
     public CompleteFunction() {
         this.sinFunction = new SinFunction();
@@ -23,10 +23,10 @@ public class CompleteFunction implements Function {
         this.log10 = new LogAFunction(10, this.lnFunction);
     }
 
-    public CompleteFunction(CosFunction cosFunction, SinFunction sinFunction,
-                          LnFunction lnFunction, LogAFunction log2Function,
-                          LogAFunction log3Function, LogAFunction log5Function,
-                          LogAFunction log10Function) {
+    public CompleteFunction(Function cosFunction, Function sinFunction,
+                            Function lnFunction, Function log2Function,
+                            Function log3Function, Function log5Function,
+                            Function log10Function) {
         this.cosFunction = cosFunction;
         this.sinFunction = sinFunction;
         this.lnFunction = lnFunction;
@@ -38,17 +38,21 @@ public class CompleteFunction implements Function {
 
     @Override
     public double calculate(double x, double epsilon) {
-        if (x <= 0){
+        if (x <= 0) {
             return cosFunction.calculate(x, epsilon) - sinFunction.calculate(x, epsilon);
-        }else{
-            if (Math.abs(x - 1.0) < 1e-12) {
-                throw new ArithmeticException("делитель равно нулю запрещено");
-            }
-            double log2xSquared = log2.calculate(x, epsilon) * log2.calculate(x, epsilon);
-            double A = ((log5.calculate(x, epsilon) + log10.calculate(x, epsilon)) / log2.calculate(x, epsilon)) * log3.calculate(x, epsilon);
-            double B = A / (lnFunction.calculate(x, epsilon) / log3.calculate(x, epsilon));
-            double C = log2xSquared + log2xSquared;
-            return B - C;
         }
+
+        if (Math.abs(x - 1.0) < 1e-12) {
+            throw new ArithmeticException("division by zero at x = 1");
+        }
+
+        double log2x = log2.calculate(x, epsilon);
+        double log3x = log3.calculate(x, epsilon);
+        double log2xSquared = log2x * log2x;
+        double a = ((log5.calculate(x, epsilon) + log10.calculate(x, epsilon)) / log2x) * log3x;
+        double b = a / (lnFunction.calculate(x, epsilon) / log3x);
+        double c = log2xSquared + log2xSquared;
+
+        return b - c;
     }
 }

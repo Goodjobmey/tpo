@@ -6,6 +6,10 @@ public class SinFunction implements Function {
 
     @Override
     public double calculate(double x, double epsilon) {
+        if (epsilon <= 0) {
+            throw new IllegalArgumentException("epsilon must be > 0");
+        }
+
         double input = x;
         double sign = 1;
         if (x < 0) {
