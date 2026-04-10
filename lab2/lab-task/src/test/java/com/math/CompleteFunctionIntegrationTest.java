@@ -91,6 +91,36 @@ public class CompleteFunctionIntegrationTest {
                 complete.calculate(2.0, EPSILON), DELTA);
     }
 
+    @Test
+    void integrationSpecificPoints() {
+        Function sin = new SinFunction();
+        Function cos = new CosFunction(sin);
+        Function ln = new LnFunction();
+        Function log2 = new LogAFunction(2, ln);
+        Function log3 = new LogAFunction(3, ln);
+        Function log5 = new LogAFunction(5, ln);
+        Function log10 = new LogAFunction(10, ln);
+        Function complete = new CompleteFunction(cos, sin, ln, log2, log3, log5, log10);
+
+        double[] testPoints = {
+                1.07,
+                0.88,
+                1.35,
+                0,
+                -Math.PI / 4,
+                -3 * Math.PI / 4,
+                -5 * Math.PI / 4
+        };
+
+        for (double x : testPoints) {
+            assertEquals(
+                    calcExpected(x, cos, sin, ln, log2, log3, log5, log10),
+                    complete.calculate(x, EPSILON),
+                    DELTA
+            );
+        }
+    }
+
     private double calcExpected(
             double x,
             Function cos,
@@ -113,4 +143,6 @@ public class CompleteFunctionIntegrationTest {
         double c = log2xSquared + log2xSquared;
         return b - c;
     }
+
+
 }

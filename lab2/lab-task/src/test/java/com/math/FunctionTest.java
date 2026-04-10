@@ -1,45 +1,40 @@
 package com.math;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.stub.SinStub;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class FunctionTest {
 
     private final SinFunction sin = new SinFunction();
-    private final double eps = 1e-6;
+    private final double eps = 1e-8;
 
-    // тест синуса через функцию
     @Test
-    public void testSIN() {
-        double[] inputs = {
-                0,
-                Math.PI / 6,
-                2 * Math.PI / 3,
-                4 * Math.PI / 3,
-                11 * Math.PI / 6,
-                -Math.PI / 4,
-                10 * Math.PI + Math.PI / 4,
-                1e-10
-        };
+    void sinShouldMatchReferenceValues() {
+        SinStub sinStub = new SinStub();
 
-        for (double x : inputs) {
-            assertEquals(Math.sin(x), sin.calculate(x, eps), eps,
-                    "sin(" + x + ") должен совпадать с Math.sin");
+        for (double[] point : sinStub.getTable()) {
+            double x = point[0];
+            assertEquals(Math.sin(x), sin.calculate(x, eps), 1e-6, "sin(" + x + ")");
         }
     }
 
-    // тест косинуса через заглушку синуса
     @Test
-    public void testCOSWithStub() {
-        SinStub sinStub = new SinStub();  // заглушка
-        CosFunction cosWithStub = new CosFunction(sin);
+    void cosShouldUseInjectedSinStub() {
+        SinStub sinStub = new SinStub();
+        CosFunction cosWithStub = new CosFunction(sinStub);
 
-        for (double[] point : sinStub.getTable()) {  // 需要添加 getter 方法
+        for (double[] point : sinStub.getTable()) {
             double x = point[0];
-            assertEquals(Math.cos(x), cosWithStub.calculate(x, eps), eps,
-                    "cos(" + x + ") 应该与 Math.cos 通过 stub 保持一致");
+            assertEquals(Math.cos(x), cosWithStub.calculate(x, eps), 1e-6, "cos(" + x + ")");
         }
+    }
+
+    @Test
+    void sinInvalidEpsilonShouldThrow() {
+        assertThrows(IllegalArgumentException.class, () -> sin.calculate(1.0, 0.0));
+        assertThrows(IllegalArgumentException.class, () -> sin.calculate(1.0, -1e-6));
     }
 }

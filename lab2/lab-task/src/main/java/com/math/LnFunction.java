@@ -6,8 +6,11 @@ public class LnFunction implements Function {
 
     @Override
     public double calculate(double x, double epsilon) {
+        if (epsilon <= 0) {
+            throw new IllegalArgumentException("epsilon must be > 0");
+        }
         if (x <= 0) {
-            throw new IllegalArgumentException("x должна больше чем нулей");
+            throw new IllegalArgumentException("x must be > 0");
         }
 
         double input = x;
@@ -34,5 +37,4 @@ public class LnFunction implements Function {
 
         return sign * 2 * result;
     }
-
 }

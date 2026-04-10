@@ -1,53 +1,55 @@
 package com.math;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LnFunctionTest {
 
     private final LnFunction ln = new LnFunction();
     private final double eps = 1e-8;
-    private final double ep = 1e-4;
 
     @Test
-    public void testValuesLessThanOne() {
+    void valuesLessThanOne() {
         double[] inputs = {0.1, 0.25, 0.5, 0.9};
         for (double x : inputs) {
-            assertEquals(Math.log(x), ln.calculate(x, eps), ep,
-                    "ln(" + x + ") должен совпадать с Math.log");
+            assertEquals(Math.log(x), ln.calculate(x, eps), 1e-4, "ln(" + x + ")");
         }
     }
 
     @Test
-    public void testValueOne() {
-        assertEquals(0, ln.calculate(1, eps), ep, "ln(1) должен быть 0");
+    void valueOne() {
+        assertEquals(0, ln.calculate(1, eps), 1e-4);
     }
 
-
     @Test
-    public void testValuesGreaterThanOne() {
+    void valuesGreaterThanOne() {
         double[] inputs = {2, 3, Math.E, 10, 100};
         for (double x : inputs) {
-            assertEquals(Math.log(x), ln.calculate(x, eps), ep,
-                    "ln(" + x + ") должен совпадать с Math.log");
+            assertEquals(Math.log(x), ln.calculate(x, eps), 1e-4, "ln(" + x + ")");
         }
     }
 
     @Test
-    public void testVerySmallAndVeryLargeValues() {
+    void verySmallAndVeryLargeValues() {
         double[] inputs = {1e-6, 1e-5, 1e5, 1e6};
         for (double x : inputs) {
-            assertEquals(Math.log(x), ln.calculate(x, eps), 1e-2,
-                    "ln(" + x + ") должен совпадать с Math.log");
+            assertEquals(Math.log(x), ln.calculate(x, eps), 1e-2, "ln(" + x + ")");
         }
     }
 
     @Test
-    public void testNegativeAndZeroValues() {
+    void invalidXShouldThrow() {
         double[] invalidInputs = {0, -0.1, -5};
         for (double x : invalidInputs) {
-            assertThrows(IllegalArgumentException.class, () -> ln.calculate(x, eps),
-                    "ln(" + x + ") должна выбросить IllegalArgumentException");
+            assertThrows(IllegalArgumentException.class, () -> ln.calculate(x, eps));
         }
+    }
+
+    @Test
+    void invalidEpsilonShouldThrow() {
+        assertThrows(IllegalArgumentException.class, () -> ln.calculate(2, 0));
+        assertThrows(IllegalArgumentException.class, () -> ln.calculate(2, -1e-6));
     }
 }
