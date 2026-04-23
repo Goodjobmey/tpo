@@ -1,62 +1,66 @@
 package com.math;
 
-import com.stub.SinStub;
+import com.back.Function;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class FunctionTest {
 
-    private final SinFunction sin = new SinFunction();
+    @Mock
+    private Function mockSin;
+
+    private final SinFunction realSin = new SinFunction();
     private final double eps = 1e-8;
 
     @Test
     void sinShouldMatchReferenceValues() {
-        SinStub sinStub = new SinStub();
+        double[] testPoints = {0.0, Math.PI/6, Math.PI/4, Math.PI/3, Math.PI/2,
+                2*Math.PI/3, 3*Math.PI/4, 5*Math.PI/6, Math.PI};
 
-        for (double[] point : sinStub.getTable()) {
-            double x = point[0];
-            assertEquals(Math.sin(x), sin.calculate(x, eps), 1e-6, "sin(" + x + ")");
+        for (double x : testPoints) {
+            assertEquals(Math.sin(x), realSin.calculate(x, eps), 1e-6, "sin(" + x + ")");
         }
     }
 
     @Test
     void cosShouldUseInjectedSinStub() {
-        SinStub sinStub = new SinStub();
-        CosFunction cosWithStub = new CosFunction(sinStub);
+        when(mockSin.calculate(eq(0.0), anyDouble())).thenReturn(0.0);
+        when(mockSin.calculate(eq(Math.PI / 2), anyDouble())).thenReturn(1.0);
+        when(mockSin.calculate(eq(Math.PI), anyDouble())).thenReturn(0.0);
+        when(mockSin.calculate(eq(-Math.PI / 2), anyDouble())).thenReturn(-1.0);  // 添加这行！
 
-        for (double[] point : sinStub.getTable()) {
-            double x = point[0];
-            assertEquals(Math.cos(x), cosWithStub.calculate(x, eps), 1e-6, "cos(" + x + ")");
-        }
+        CosFunction cosWithMockSin = new CosFunction(mockSin);
+
+        assertEquals(1.0, cosWithMockSin.calculate(0.0, eps), 1e-6);
+        assertEquals(0.0, cosWithMockSin.calculate(Math.PI / 2, eps), 1e-6);
+        assertEquals(-1.0, cosWithMockSin.calculate(Math.PI, eps), 1e-6);
     }
 
     @Test
     void cosShouldSatisfyIdentityUsingMathAndImplementation() {
-        SinFunction sinImpl = new SinFunction();
-        CosFunction cosImpl = new CosFunction(new SinStub());
+        SinFunction realSinImpl = new SinFunction();
+        CosFunction cosImpl = new CosFunction(realSinImpl);
 
-        SinStub sinStub = new SinStub();
+        double[] testPoints = {0.0, Math.PI/6, Math.PI/4, Math.PI/3, Math.PI/2,
+                2*Math.PI/3, 3*Math.PI/4, 5*Math.PI/6, Math.PI};
 
-        for (double[] point : sinStub.getTable()) {
-            double x = point[0];
-
-            double sin = sinImpl.calculate(x, eps);
+        for (double x : testPoints) {
+            double sin = realSinImpl.calculate(x, eps);
             double cos = cosImpl.calculate(x, eps);
 
-            double identityFromSin = 1 - sin * sin;
-
-            double cosSquared = cos * cos;
-
-            assertEquals(identityFromSin, cosSquared, 1e-6,
-                    "Identity failed for x = " + x);
+            assertEquals(1.0, sin * sin + cos * cos, 1e-6, "Identity failed for x = " + x);
         }
     }
 
     @Test
     void sinInvalidEpsilonShouldThrow() {
-        assertThrows(IllegalArgumentException.class, () -> sin.calculate(1.0, 0.0));
-        assertThrows(IllegalArgumentException.class, () -> sin.calculate(1.0, -1e-6));
+        assertThrows(IllegalArgumentException.class, () -> realSin.calculate(1.0, 0.0));
+        assertThrows(IllegalArgumentException.class, () -> realSin.calculate(1.0, -1e-6));
     }
 }
